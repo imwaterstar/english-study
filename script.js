@@ -86,11 +86,31 @@ function generateLetterButtons(word){
   });
 }
 
-// 删除最后一个字母
-document.getElementById('delete-btn').addEventListener('click', () => {
+// —— 删除一个字符的通用函数 ——
+function handleDeleteOne() {
   const input = document.getElementById('user-input');
+  if (!input) return;
   input.value = input.value.slice(0, -1);
+}
+
+// —— DOM 准备好后再绑定事件，避免找不到元素 ——
+document.addEventListener('DOMContentLoaded', () => {
+  const delBtn = document.getElementById('delete-btn');
+  if (delBtn) {
+    delBtn.addEventListener('click', handleDeleteOne);
+  } else {
+    console.warn('未找到 #delete-btn 按钮，请检查 HTML 是否有该 id。');
+  }
+
+  // 可选：支持键盘退格（即使输入框是 readonly 也能删）
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();  // 阻止浏览器默认行为
+      handleDeleteOne();
+    }
+  });
 });
+
 
 // 点击确定检查
 document.getElementById('check-btn').addEventListener('click', ()=>{
@@ -104,5 +124,6 @@ document.getElementById('check-btn').addEventListener('click', ()=>{
     alert("错误！");
   }
 });
+
 
 
