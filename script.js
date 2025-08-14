@@ -1,44 +1,51 @@
 let data;
-let currentUnit = null;
-let currentWordIndex = 0;
 
 // 加载 JSON
 fetch('words.json')
   .then(res => res.json())
   .then(json => {
-    data = json.units;
+    data = json;  // data 是对象，key 是单元名
     populateUnitSelect();
-  });
+  })
+  .catch(err => console.error("加载 JSON 出错:", err));
 
 // 填充单元选择
 function populateUnitSelect() {
   const select = document.getElementById('unit-select');
-  data.forEach((unit, i) => {
+  select.innerHTML = '<option value="">选择单元</option>';
+
+  // 遍历 data 的键（单元名）
+  Object.keys(data).forEach((unitName, i) => {
     const option = document.createElement('option');
-    option.value = i;
-    option.textContent = unit.name;
+    option.value = unitName; // 直接用单元名作为 value
+    option.textContent = unitName;
     select.appendChild(option);
   });
 }
 
 // 点击开始学习
 document.getElementById('start-btn').addEventListener('click', () => {
-  const unitIndex = document.getElementById('unit-select').value;
-  if(unitIndex === "") return alert("请选择单元！");
-  currentUnit = data[unitIndex];
+  const unitName = document.getElementById('unit-select').value;
+  if (!unitName) return alert("请选择单元！");
+
+  currentUnitWords = data[unitName]; // 当前单元单词数组
   currentWordIndex = 0;
+
   document.getElementById('learning-window').style.display = 'block';
   showCurrentWord();
 });
 
+let currentUnitWords = [];
+let currentWordIndex = 0;
+
 // 显示当前单词
 function showCurrentWord() {
-  if(currentWordIndex >= currentUnit.words.length){
+  if (currentWordIndex >= currentUnitWords.length) {
     alert("本单元学习完毕！");
     document.getElementById('learning-window').style.display = 'none';
     return;
   }
-  const wordObj = currentUnit.words[currentWordIndex];
+  const wordObj = currentUnitWords[currentWordIndex];
   document.getElementById('word-meaning').textContent = wordObj.japanese;
   document.getElementById('user-input').value = "";
   generateLetterButtons(wordObj.english);
@@ -52,27 +59,23 @@ function playWord(word){
   speechSynthesis.speak(utter);
 }
 
-// 生成字母按钮
+// 生成字母按钮（和之前逻辑一样）
 function generateLetterButtons(word){
   const allLettersSet = new Set();
-  currentUnit.words.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
-  
+  currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
+
   let letters = Array.from(allLettersSet);
-  
-  // 当前单词字母
   word.split('').forEach(l => { if(!letters.includes(l)) letters.push(l); });
-  
-  // 计算目标数量
+
   const targetCount = Math.ceil(word.length * 1.5);
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   while(letters.length < targetCount){
     const randLetter = alphabet[Math.floor(Math.random()*alphabet.length)];
     if(!letters.includes(randLetter)) letters.push(randLetter);
   }
-  
-  // 打乱
+
   letters.sort(() => Math.random()-0.5);
-  
+
   const div = document.getElementById('letter-buttons');
   div.innerHTML = "";
   letters.forEach(l => {
@@ -88,7 +91,7 @@ function generateLetterButtons(word){
 // 点击确定检查
 document.getElementById('check-btn').addEventListener('click', ()=>{
   const input = document.getElementById('user-input').value.toLowerCase();
-  const wordObj = currentUnit.words[currentWordIndex];
+  const wordObj = currentUnitWords[currentWordIndex];
   if(input === wordObj.english){
     alert("正确！");
     currentWordIndex++;
@@ -97,3 +100,4 @@ document.getElementById('check-btn').addEventListener('click', ()=>{
     alert("错误！");
   }
 });
+
