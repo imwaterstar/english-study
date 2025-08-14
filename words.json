@@ -1,12 +1,22 @@
-[
-  {"unit":1,"word":"apple","meaning":"りんご"},
-  {"unit":1,"word":"book","meaning":"本"},
-  {"unit":1,"word":"cat","meaning":"ねこ"},
-  {"unit":2,"word":"dog","meaning":"いぬ"},
-  {"unit":2,"word":"fish","meaning":"さかな"},
-  {"unit":2,"word":"bird","meaning":"とり"},
-  {"unit":3,"word":"house","meaning":"いえ"},
-  {"unit":3,"word":"car","meaning":"くるま"},
-  {"unit":3,"word":"tree","meaning":"き"}
-]
+{
+  "units": [
+    {
+      "name": "Unit 1",
+      "words": [
+        {"english": "apple", "japanese": "りんご"},
+        {"english": "banana", "japanese": "バナナ"},
+        {"english": "grape", "japanese": "ぶどう"}
+      ]
+    },
+    {
+      "name": "Unit 2",
+      "words": [
+        {"english": "orange", "japanese": "オレンジ"},
+        {"english": "peach", "japanese": "もも"},
+        {"english": "melon", "japanese": "メロン"}
+      ]
+    }
+  ]
+}
+
 
