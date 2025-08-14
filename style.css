@@ -1,18 +1,9 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-}
-
-input.letter {
-    width: 30px;
-    font-size: 20px;
-    text-align: center;
-    margin: 2px;
-}
-
 button {
-    padding: 5px 10px;
-    font-size: 16px;
-    margin-top: 10px;
+  margin: 2px;
+  padding: 10px;
+  font-size: 18px;
+}
+input {
+  padding: 5px;
+  width: 300px;
 }
