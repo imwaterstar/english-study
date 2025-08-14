@@ -15,9 +15,9 @@ function populateUnitSelect() {
   select.innerHTML = '<option value="">选择单元</option>';
 
   // 遍历 data 的键（单元名）
-  Object.keys(data).forEach((unitName, i) => {
+  Object.keys(data).forEach((unitName) => {
     const option = document.createElement('option');
-    option.value = unitName; // 直接用单元名作为 value
+    option.value = unitName;
     option.textContent = unitName;
     select.appendChild(option);
   });
@@ -59,7 +59,7 @@ function playWord(word){
   speechSynthesis.speak(utter);
 }
 
-// 生成字母按钮（和之前逻辑一样）
+// 生成字母按钮（增加删除按钮）
 function generateLetterButtons(word){
   const allLettersSet = new Set();
   currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
@@ -86,6 +86,17 @@ function generateLetterButtons(word){
     });
     div.appendChild(btn);
   });
+
+  // 添加删除按钮
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent = "删除";
+  deleteBtn.style.backgroundColor = "#f55";
+  deleteBtn.style.color = "#fff";
+  deleteBtn.addEventListener('click', () => {
+    let inputEl = document.getElementById('user-input');
+    inputEl.value = inputEl.value.slice(0, -1);
+  });
+  div.appendChild(deleteBtn);
 }
 
 // 点击确定检查
