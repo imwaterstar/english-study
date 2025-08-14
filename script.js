@@ -1,10 +1,12 @@
 let data;
+let currentUnitWords = [];
+let currentWordIndex = 0;
 
 // 加载 JSON
 fetch('words.json')
   .then(res => res.json())
   .then(json => {
-    data = json;  // data 是对象，key 是单元名
+    data = json; // 顶层对象，单元名作为 key
     populateUnitSelect();
   })
   .catch(err => console.error("加载 JSON 出错:", err));
@@ -14,10 +16,9 @@ function populateUnitSelect() {
   const select = document.getElementById('unit-select');
   select.innerHTML = '<option value="">选择单元</option>';
 
-  // 遍历 data 的键（单元名）
-  Object.keys(data).forEach((unitName, i) => {
+  Object.keys(data).forEach(unitName => {
     const option = document.createElement('option');
-    option.value = unitName; // 直接用单元名作为 value
+    option.value = unitName; // 单元名作为 value
     option.textContent = unitName;
     select.appendChild(option);
   });
@@ -28,15 +29,12 @@ document.getElementById('start-btn').addEventListener('click', () => {
   const unitName = document.getElementById('unit-select').value;
   if (!unitName) return alert("请选择单元！");
 
-  currentUnitWords = data[unitName]; // 当前单元单词数组
+  currentUnitWords = data[unitName];
   currentWordIndex = 0;
 
   document.getElementById('learning-window').style.display = 'block';
   showCurrentWord();
 });
-
-let currentUnitWords = [];
-let currentWordIndex = 0;
 
 // 显示当前单词
 function showCurrentWord() {
@@ -59,7 +57,7 @@ function playWord(word){
   speechSynthesis.speak(utter);
 }
 
-// 生成字母按钮（和之前逻辑一样）
+// 生成字母按钮
 function generateLetterButtons(word){
   const allLettersSet = new Set();
   currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
@@ -88,6 +86,12 @@ function generateLetterButtons(word){
   });
 }
 
+// 删除最后一个字母
+document.getElementById('delete-btn').addEventListener('click', () => {
+  const input = document.getElementById('user-input');
+  input.value = input.value.slice(0, -1);
+});
+
 // 点击确定检查
 document.getElementById('check-btn').addEventListener('click', ()=>{
   const input = document.getElementById('user-input').value.toLowerCase();
@@ -100,4 +104,5 @@ document.getElementById('check-btn').addEventListener('click', ()=>{
     alert("错误！");
   }
 });
+
 
