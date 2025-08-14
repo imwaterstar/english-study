@@ -15,13 +15,16 @@ function populateUnitSelect() {
   select.innerHTML = '<option value="">选择单元</option>';
 
   // 遍历 data 的键（单元名）
-  Object.keys(data).forEach((unitName) => {
+  Object.keys(data).forEach((unitName, i) => {
     const option = document.createElement('option');
-    option.value = unitName;
+    option.value = unitName; // 直接用单元名作为 value
     option.textContent = unitName;
     select.appendChild(option);
   });
 }
+
+let currentUnitWords = [];
+let currentWordIndex = 0;
 
 // 点击开始学习
 document.getElementById('start-btn').addEventListener('click', () => {
@@ -34,9 +37,6 @@ document.getElementById('start-btn').addEventListener('click', () => {
   document.getElementById('learning-window').style.display = 'block';
   showCurrentWord();
 });
-
-let currentUnitWords = [];
-let currentWordIndex = 0;
 
 // 显示当前单词
 function showCurrentWord() {
@@ -59,7 +59,7 @@ function playWord(word){
   speechSynthesis.speak(utter);
 }
 
-// 生成字母按钮（增加删除按钮）
+// 生成字母按钮
 function generateLetterButtons(word){
   const allLettersSet = new Set();
   currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
@@ -86,17 +86,6 @@ function generateLetterButtons(word){
     });
     div.appendChild(btn);
   });
-
-  // 添加删除按钮
-  const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = "删除";
-  deleteBtn.style.backgroundColor = "#f55";
-  deleteBtn.style.color = "#fff";
-  deleteBtn.addEventListener('click', () => {
-    let inputEl = document.getElementById('user-input');
-    inputEl.value = inputEl.value.slice(0, -1);
-  });
-  div.appendChild(deleteBtn);
 }
 
 // 点击确定检查
