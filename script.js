@@ -59,7 +59,7 @@ function playWord(word){
   speechSynthesis.speak(utter);
 }
 
-// 生成字母按钮 + 删除按钮
+// 生成字母按钮（和之前逻辑一样）
 function generateLetterButtons(word){
   const allLettersSet = new Set();
   currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
@@ -78,8 +78,6 @@ function generateLetterButtons(word){
 
   const div = document.getElementById('letter-buttons');
   div.innerHTML = "";
-
-  // 字母按钮
   letters.forEach(l => {
     const btn = document.createElement('button');
     btn.textContent = l;
@@ -88,17 +86,6 @@ function generateLetterButtons(word){
     });
     div.appendChild(btn);
   });
-
-  // 删除按钮
-  const delBtn = document.createElement('button');
-  delBtn.textContent = "⌫";
-  delBtn.style.backgroundColor = "#ff6666";
-  delBtn.style.color = "#fff";
-  delBtn.addEventListener('click', () => {
-    const inputEl = document.getElementById('user-input');
-    inputEl.value = inputEl.value.slice(0, -1);
-  });
-  div.appendChild(delBtn);
 }
 
 // 点击确定检查
@@ -113,12 +100,3 @@ document.getElementById('check-btn').addEventListener('click', ()=>{
     alert("错误！");
   }
 });
-
-
-
-
-
-
-
-
-
