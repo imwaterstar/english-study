@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>英语学习程序</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>英语学习程序</h1>
+
+    <div id="select-unit">
+      <label>选择单元：</label>
+      <select id="unit-select"></select>
+      <button id="start-btn">开始学习</button>
+    </div>
+
+    <div id="study-area" style="display:none;">
+      <h2 id="meaning"></h2>
+      <div id="letter-panel"></div>
+      <button id="check-btn">确定</button>
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
