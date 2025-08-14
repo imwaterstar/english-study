@@ -1,141 +1,113 @@
-let wordsData = {};
-let currentUnit = '';
+let words = [];
 let currentWord = '';
-let currentIndex = 0;
+let currentMeaning = '';
+let currentUnit = '';
+let guessedWord = '';
+let availableLetters = [];
 
-// 从 words.json 加载单词
-fetch('words.json')
-  .then(response => response.json())
-  .then(data => {
-    wordsData = data;
-    populateUnitSelect();
-  });
-
-// 填充单元选择下拉框
-function populateUnitSelect() {
-  const unitSelect = document.getElementById('unit-select');
-  unitSelect.innerHTML = '';
-
-  // 获取所有单元名（unit1, unit2...）
-  const units = Object.keys(wordsData);
-  units.forEach(unit => {
-    const option = document.createElement('option');
-    option.value = unit;
-    option.textContent = unit;
-    unitSelect.appendChild(option);
-  });
-
-  // 默认选择第一个单元并加载
-  if (units.length > 0) {
-    unitSelect.value = units[0];
-    currentUnit = units[0];
-    loadUnitWords();
-  }
-}
-
-// 加载当前单元的单词
-function loadUnitWords() {
-  currentIndex = 0;
-  showWord();
-}
-
-// 显示当前单词和字母按钮
-function showWord() {
-  const words = wordsData[currentUnit];
-  if (!words || words.length === 0) return;
-
-  currentWord = words[currentIndex];
-  document.getElementById('word-display').textContent = '_ '.repeat(currentWord.length);
-
-  const lettersContainer = document.getElementById('letters-container');
-  lettersContainer.innerHTML = '';
-
-  // 获取当前单词的唯一字母
-  let uniqueLetters = Array.from(new Set(currentWord.split('')));
-  // 额外加一个随机字母
-  const randomLetter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
-  uniqueLetters.push(randomLetter);
-
-  // 为了达到单词长度的 1.5 倍，重复一些字母
-  while (uniqueLetters.length < Math.ceil(currentWord.length * 1.5)) {
-    const rand = String.fromCharCode(97 + Math.floor(Math.random() * 26));
-    if (!uniqueLetters.includes(rand)) {
-      uniqueLetters.push(rand);
-    }
-  }
-
-  // 打乱字母顺序
-  uniqueLetters = shuffleArray(uniqueLetters);
-
-  // 创建字母按钮
-  uniqueLetters.forEach(letter => {
-    const btn = document.createElement('button');
-    btn.textContent = letter;
-    btn.addEventListener('click', () => {
-      const input = document.getElementById('user-input');
-      input.value += letter;
-    });
-    lettersContainer.appendChild(btn);
-  });
-}
-
-// 打乱数组顺序
-function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-// 检查答案
-function checkAnswer() {
-  const input = document.getElementById('user-input');
-  if (input.value.toLowerCase() === currentWord.toLowerCase()) {
-    alert('正确！');
-    input.value = '';
-    nextWord();
-  } else {
-    alert('错误，请重试');
-  }
-}
-
-// 切换到下一个单词
-function nextWord() {
-  const words = wordsData[currentUnit];
-  currentIndex++;
-  if (currentIndex >= words.length) {
-    alert('该单元已完成！');
-    currentIndex = 0;
-  }
-  showWord();
-}
-
-// 删除最后一个字符
-function handleDeleteOne() {
-  const input = document.getElementById('user-input');
-  if (!input) return;
-  input.value = input.value.slice(0, -1);
-}
-
-// 绑定事件
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('unit-select').addEventListener('change', (e) => {
-    currentUnit = e.target.value;
-    loadUnitWords();
-  });
+    fetch('words.json')
+        .then(response => response.json())
+        .then(data => {
+            words = data;
+            populateUnitSelect();
+        });
 
-  document.getElementById('check-btn').addEventListener('click', checkAnswer);
-
-  const delBtn = document.getElementById('delete-btn');
-  if (delBtn) {
-    delBtn.addEventListener('click', handleDeleteOne);
-  }
-
-  // 支持键盘退格
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Backspace') {
-      e.preventDefault();
-      handleDeleteOne();
-    }
-  });
+    document.getElementById('unitSelect').addEventListener('change', startGame);
 });
+
+function populateUnitSelect() {
+    const unitSelect = document.getElementById('unitSelect');
+    const units = [...new Set(words.map(word => word.unit))];
+    units.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        unitSelect.appendChild(option);
+    });
+}
+
+function startGame() {
+    const unitSelect = document.getElementById('unitSelect');
+    currentUnit = unitSelect.value;
+    if (!currentUnit) return;
+    const unitWords = words.filter(word => word.unit === currentUnit);
+    if (unitWords.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * unitWords.length);
+    const { word, meaning } = unitWords[randomIndex];
+    currentWord = word.toLowerCase();
+    currentMeaning = meaning;
+    guessedWord = '';
+    document.getElementById('meaning').textContent = currentMeaning;
+    document.getElementById('guessedWord').textContent = '_ '.repeat(currentWord.length);
+
+    generateLetterButtons(unitWords);
+}
+
+function generateLetterButtons(unitWords) {
+    const letterButtons = document.getElementById('letterButtons');
+    letterButtons.innerHTML = '';
+
+    // 生成所有单词中可能的字母
+    const allLetters = [...new Set(unitWords.flatMap(w => w.word.toLowerCase().split('')))];
+    
+    // 增加随机字母
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    while (allLetters.length < Math.ceil(currentWord.length * 1.5)) {
+        const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+        if (!allLetters.includes(randomLetter)) {
+            allLetters.push(randomLetter);
+        }
+    }
+
+    // 打乱顺序
+    availableLetters = allLetters.sort(() => Math.random() - 0.5);
+
+    // 创建字母按钮
+    availableLetters.forEach(letter => {
+        const button = document.createElement('button');
+        button.textContent = letter;
+        button.addEventListener('click', () => guessLetter(letter));
+        letterButtons.appendChild(button);
+    });
+
+    // 创建删除按钮
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = '⌫ 删除';
+    deleteButton.style.backgroundColor = '#f88';
+    deleteButton.addEventListener('click', deleteLastLetter);
+    letterButtons.appendChild(deleteButton);
+}
+
+function guessLetter(letter) {
+    guessedWord += letter;
+    updateGuessedWord();
+}
+
+function deleteLastLetter() {
+    if (guessedWord.length > 0) {
+        guessedWord = guessedWord.slice(0, -1);
+        updateGuessedWord();
+    }
+}
+
+function updateGuessedWord() {
+    let display = guessedWord.split('').join(' ');
+    display += ' _'.repeat(currentWord.length - guessedWord.length);
+    document.getElementById('guessedWord').textContent = display.trim();
+
+    if (guessedWord.length === currentWord.length) {
+        if (guessedWord === currentWord) {
+            alert('正确！');
+        } else {
+            alert('错误！正确答案是：' + currentWord);
+        }
+        startGame();
+    }
+}
+
+
 
 
 
