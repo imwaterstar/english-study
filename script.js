@@ -108,6 +108,8 @@ function setupButtonContainer() {
 document.getElementById("check-btn").addEventListener("click", () => {
   const input = document.getElementById("user-input").value.toLowerCase();
   const wordObj = currentUnitWords[currentWordIndex];
+   // 无论对错，先播放发音
+  playWord(wordObj.english);
   if (input === wordObj.english) {
     alert("正确！");
     currentWordIndex++;
@@ -117,6 +119,7 @@ document.getElementById("check-btn").addEventListener("click", () => {
     alert(`错误！正确写法是：${wordObj.english}`);
   }
 });
+
 
 
 
