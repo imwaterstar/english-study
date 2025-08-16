@@ -39,7 +39,7 @@ function loadUnit(unitIndex) {
   setupButtonContainer();
 }
 
-// 显示单词
+// 显示当前单词
 function showCurrentWord() {
   if (currentWordIndex >= currentUnitWords.length) {
     if (wrongWords.length > 0) {
