@@ -6,19 +6,22 @@ body {
 
 h1 {
   text-align: center;
-  margin: 20px 0;
+  padding: 10px 0;
+  background-color: #f0f0f0;
+  margin: 0;
 }
 
-/* 容器: 左侧导航栏 + 右侧内容 */
-#container {
+/* 主容器 */
+#main-container {
   display: flex;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 50px);
 }
 
 /* 左侧导航栏 */
 #sidebar {
   width: 200px;
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
+  border-right: 1px solid #ddd;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -31,22 +34,75 @@ h1 {
 #sidebar li {
   padding: 10px;
   cursor: pointer;
-  border-bottom: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition: background-color 0.3s;
 }
 
 #sidebar li:hover {
-  background-color: #ddd;
+  background-color: #e0e0e0;
 }
 
-/* 右侧主区域 */
-#main {
+/* 右侧学习区 */
+#learning-area {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* 学习区 */
+/* 输入框 */
+#user-input {
+  width: 100%;
+  font-size: 18px;
+  padding: 8px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+/* 字母按钮 */
 #letter-buttons button {
-  margin: 5px;
-  padding: 10px;
+  padding: 10px 15px;
+  margin: 5px 5px 5px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #2196F3;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#letter-buttons button:hover {
+  background-color: #1976D2;
+}
+
+/* 按钮容器 */
+#button-container {
+  margin-top: 10px;
+}
+
+/* 确认和删除按钮 */
+#button-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#button-container button:hover {
+  background-color: #45a049;
+}
+
+/* 删除按钮样式 */
+#delete-btn {
+  background-color: #f44336;
+}
+
+#delete-btn:hover {
+  background-color: #d32f2f;
 }

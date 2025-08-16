@@ -1,35 +1,34 @@
-let data; // 存储 JSON 数据
+let data;
 let currentUnitWords = [];
 let currentWordIndex = 0;
 
-// 加载 words.json
+// 加载 JSON
 fetch("words.json")
   .then(res => res.json())
   .then(json => {
     data = json;
-    populateUnitList(); // 填充左侧导航栏
+    populateUnitList();
   })
   .catch(err => console.error("加载 JSON 出错:", err));
 
-// 填充左侧导航栏
+// 左侧导航栏
 function populateUnitList() {
   const ul = document.getElementById("unit-list");
-  ul.innerHTML = ""; // 清空
+  ul.innerHTML = "";
   data.units.forEach((unit, index) => {
     const li = document.createElement("li");
     li.textContent = unit.name;
-    li.addEventListener("click", () => {
-      loadUnit(index);
-    });
+    li.addEventListener("click", () => loadUnit(index));
     ul.appendChild(li);
   });
 }
 
-// 点击左侧单元
+// 点击单元
 function loadUnit(unitIndex) {
   currentUnitWords = data.units[unitIndex].words;
   currentWordIndex = 0;
   document.getElementById("learning-window").style.display = "block";
+  setupButtonContainer();
   showCurrentWord();
 }
 
@@ -47,7 +46,7 @@ function showCurrentWord() {
   playWord(wordObj.english);
 }
 
-// 播放单词发音
+// 播放发音
 function playWord(word) {
   const utter = new SpeechSynthesisUtterance(word);
   utter.lang = "en-US";
@@ -60,15 +59,13 @@ function generateLetterButtons(word) {
   container.innerHTML = "";
 
   let letters = word.split("");
-
-  // 加入额外随机字母，达到单词长度 1.5 倍
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
   while (letters.length < Math.ceil(word.length * 1.5)) {
     const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
     if (!letters.includes(randLetter)) letters.push(randLetter);
   }
 
-  // 随机排序
   letters.sort(() => Math.random() - 0.5);
 
   letters.forEach(l => {
@@ -81,7 +78,33 @@ function generateLetterButtons(word) {
   });
 }
 
-// 确认按钮
+// 设置按钮容器（确认 + 删除）
+function setupButtonContainer() {
+  let container = document.getElementById("button-container");
+
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "button-container";
+    document.getElementById("learning-window").appendChild(container);
+
+    // 确认按钮
+    const checkBtn = document.getElementById("check-btn");
+    container.appendChild(checkBtn);
+
+    // 删除按钮
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "删除";
+    deleteBtn.id = "delete-btn";
+    container.appendChild(deleteBtn);
+
+    deleteBtn.addEventListener("click", () => {
+      const input = document.getElementById("user-input");
+      input.value = input.value.slice(0, -1);
+    });
+  }
+}
+
+// 确认按钮逻辑
 document.getElementById("check-btn").addEventListener("click", () => {
   const input = document.getElementById("user-input").value.toLowerCase();
   const wordObj = currentUnitWords[currentWordIndex];

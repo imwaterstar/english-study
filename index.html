@@ -8,19 +8,20 @@
 <body>
   <h1>英语学习</h1>
 
-  <div id="container">
+  <div id="main-container">
     <!-- 左侧导航栏 -->
     <div id="sidebar">
       <ul id="unit-list"></ul>
     </div>
 
     <!-- 右侧学习区 -->
-    <div id="main">
+    <div id="learning-area">
       <div id="learning-window" style="display: none;">
         <p id="word-meaning"></p>
         <input type="text" id="user-input" readonly>
         <div id="letter-buttons"></div>
         <button id="check-btn">确认</button>
+        <!-- 删除按钮通过 JS 动态生成 -->
       </div>
     </div>
   </div>
