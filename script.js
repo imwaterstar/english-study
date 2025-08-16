@@ -1,19 +1,20 @@
-let data;
+let data; // 存储 JSON 数据
 let currentUnitWords = [];
 let currentWordIndex = 0;
 
-// 加载 JSON
+// 加载 words.json
 fetch("words.json")
   .then(res => res.json())
   .then(json => {
     data = json;
-    populateUnitList();  // 填充左侧导航栏
+    populateUnitList(); // 填充左侧导航栏
   })
   .catch(err => console.error("加载 JSON 出错:", err));
 
-// 左侧导航栏
+// 填充左侧导航栏
 function populateUnitList() {
   const ul = document.getElementById("unit-list");
+  ul.innerHTML = ""; // 清空
   data.units.forEach((unit, index) => {
     const li = document.createElement("li");
     li.textContent = unit.name;
@@ -46,7 +47,7 @@ function showCurrentWord() {
   playWord(wordObj.english);
 }
 
-// 播放读音
+// 播放单词发音
 function playWord(word) {
   const utter = new SpeechSynthesisUtterance(word);
   utter.lang = "en-US";
@@ -57,14 +58,17 @@ function playWord(word) {
 function generateLetterButtons(word) {
   const container = document.getElementById("letter-buttons");
   container.innerHTML = "";
+
   let letters = word.split("");
 
+  // 加入额外随机字母，达到单词长度 1.5 倍
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   while (letters.length < Math.ceil(word.length * 1.5)) {
     const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
     if (!letters.includes(randLetter)) letters.push(randLetter);
   }
 
+  // 随机排序
   letters.sort(() => Math.random() - 0.5);
 
   letters.forEach(l => {
@@ -77,7 +81,7 @@ function generateLetterButtons(word) {
   });
 }
 
-// 点击“确认”
+// 确认按钮
 document.getElementById("check-btn").addEventListener("click", () => {
   const input = document.getElementById("user-input").value.toLowerCase();
   const wordObj = currentUnitWords[currentWordIndex];
