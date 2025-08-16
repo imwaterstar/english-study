@@ -37,6 +37,10 @@ function loadUnit(unitIndex) {
   document.getElementById("learning-window").style.display = "block";
   showCurrentWord();
   setupButtonContainer();
+  document.getElementById("word-meaning").textContent = "";
+  document.getElementById("user-input").value = "";
+  document.getElementById("letter-buttons").innerHTML = "";
+  document.getElementById("correct-word").textContent = "";
 }
 
 // 显示当前单词
