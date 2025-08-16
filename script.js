@@ -113,9 +113,11 @@ document.getElementById("check-btn").addEventListener("click", () => {
     currentWordIndex++;
     showCurrentWord();
   } else {
+    // 注意这里用反引号
     alert(`错误！正确写法是：${wordObj.english}`);
   }
 });
+
 
 
 
