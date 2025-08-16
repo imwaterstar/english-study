@@ -1,40 +1,36 @@
-let data = null;
+let data;
 let currentUnitWords = [];
 let currentWordIndex = 0;
 
-// 页面加载时获取 words.json
+// 加载 JSON
 fetch("words.json")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(json => {
     data = json;
-    populateUnitSelect();
-  });
+    populateUnitList();  // 填充左侧导航栏
+  })
+  .catch(err => console.error("加载 JSON 出错:", err));
 
-// 把 units 填充到下拉框
-function populateUnitSelect() {
-  const select = document.getElementById("unit-select");
-  select.innerHTML = "";
+// 左侧导航栏
+function populateUnitList() {
+  const ul = document.getElementById("unit-list");
   data.units.forEach((unit, index) => {
-    const option = document.createElement("option");
-    option.value = index;
-    option.textContent = unit.name;
-    select.appendChild(option);
+    const li = document.createElement("li");
+    li.textContent = unit.name;
+    li.addEventListener("click", () => {
+      loadUnit(index);
+    });
+    ul.appendChild(li);
   });
 }
 
-// 点击开始学习
-document.getElementById("start-btn").addEventListener("click", () => {
-  const unitIndex = parseInt(document.getElementById("unit-select").value, 10);
-  if (isNaN(unitIndex)) {
-    alert("请选择单元！");
-    return;
-  }
+// 点击左侧单元
+function loadUnit(unitIndex) {
   currentUnitWords = data.units[unitIndex].words;
   currentWordIndex = 0;
-
   document.getElementById("learning-window").style.display = "block";
   showCurrentWord();
-});
+}
 
 // 显示当前单词
 function showCurrentWord() {
@@ -50,30 +46,46 @@ function showCurrentWord() {
   playWord(wordObj.english);
 }
 
+// 播放读音
+function playWord(word) {
+  const utter = new SpeechSynthesisUtterance(word);
+  utter.lang = "en-US";
+  speechSynthesis.speak(utter);
+}
+
 // 生成字母按钮
 function generateLetterButtons(word) {
   const container = document.getElementById("letter-buttons");
   container.innerHTML = "";
-  const letters = word.split("").sort(() => Math.random() - 0.5);
-  letters.forEach(letter => {
+  let letters = word.split("");
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  while (letters.length < Math.ceil(word.length * 1.5)) {
+    const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    if (!letters.includes(randLetter)) letters.push(randLetter);
+  }
+
+  letters.sort(() => Math.random() - 0.5);
+
+  letters.forEach(l => {
     const btn = document.createElement("button");
-    btn.textContent = letter;
+    btn.textContent = l;
     btn.addEventListener("click", () => {
-      document.getElementById("user-input").value += letter;
+      document.getElementById("user-input").value += l;
     });
     container.appendChild(btn);
   });
 }
 
-// 下一个单词
-document.getElementById("next-btn").addEventListener("click", () => {
-  currentWordIndex++;
-  showCurrentWord();
+// 点击“确认”
+document.getElementById("check-btn").addEventListener("click", () => {
+  const input = document.getElementById("user-input").value.toLowerCase();
+  const wordObj = currentUnitWords[currentWordIndex];
+  if (input === wordObj.english) {
+    alert("正确！");
+    currentWordIndex++;
+    showCurrentWord();
+  } else {
+    alert("错误！");
+  }
 });
-
-// 朗读
-function playWord(word) {
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-US";
-  speechSynthesis.speak(utterance);
-}
