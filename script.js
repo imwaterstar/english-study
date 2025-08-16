@@ -34,13 +34,17 @@ function loadUnit(unitIndex) {
   totalCount = 0;
   wrongCount = 0;
   updateCounter();
-  document.getElementById("learning-window").style.display = "block";
-  showCurrentWord();
-  setupButtonContainer();
+  const learningWindow = document.getElementById("learning-window");
+  learningWindow.style.display = "block";
   document.getElementById("word-meaning").textContent = "";
   document.getElementById("user-input").value = "";
   document.getElementById("letter-buttons").innerHTML = "";
   document.getElementById("correct-word").textContent = "";
+  
+  document.getElementById("learning-window").style.display = "block";
+  showCurrentWord();
+  setupButtonContainer();
+  
 }
 
 // 显示当前单词
