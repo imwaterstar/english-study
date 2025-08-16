@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>英语学习</title>
+  <title>英语学习网页</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 居中容器 -->
-  <div id="unit-select-container">
+  <h1>英语学习</h1>
+
+  <!-- 单元选择 -->
+  <div id="unit-container">
     <select id="unit-select"></select>
     <button id="start-btn">开始学习</button>
   </div>
 
-  <div id="learning-window" style="display:none;">
+  <!-- 学习窗口 -->
+  <div id="learning-window" style="display: none;">
     <p id="word-meaning"></p>
-    <input id="user-input" type="text" readonly>
+    <input type="text" id="user-input" readonly>
     <div id="letter-buttons"></div>
-    <button id="check-btn">确定</button>
+    <button id="next-btn">下一个</button>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-

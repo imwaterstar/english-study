@@ -1,38 +1,38 @@
-let data;
+let data = null;
 let currentUnitWords = [];
 let currentWordIndex = 0;
 
-// 加载 JSON
-fetch('words.json')
-  .then(res => res.json())
+// 页面加载时获取 words.json
+fetch("words.json")
+  .then(response => response.json())
   .then(json => {
-    data = json;  // 结构固定：{ units: [ { name, words: [...] }, ... ] }
+    data = json;
     populateUnitSelect();
-  })
-  .catch(err => console.error("加载 JSON 出错:", err));
+  });
 
-// 填充单元选择框
+// 把 units 填充到下拉框
 function populateUnitSelect() {
-  const select = document.getElementById('unit-select');
-  select.innerHTML = '<option value="">选择单元</option>';
-
+  const select = document.getElementById("unit-select");
+  select.innerHTML = "";
   data.units.forEach((unit, index) => {
-    const option = document.createElement('option');
-    option.value = index;   // 用数组下标来取
+    const option = document.createElement("option");
+    option.value = index;
     option.textContent = unit.name;
     select.appendChild(option);
   });
 }
 
-// 点击“开始学习”
-document.getElementById('start-btn').addEventListener('click', () => {
-  const unitIndex = document.getElementById('unit-select').value;
-  if (unitIndex === "") return alert("请选择单元！");
-
+// 点击开始学习
+document.getElementById("start-btn").addEventListener("click", () => {
+  const unitIndex = parseInt(document.getElementById("unit-select").value, 10);
+  if (isNaN(unitIndex)) {
+    alert("请选择单元！");
+    return;
+  }
   currentUnitWords = data.units[unitIndex].words;
   currentWordIndex = 0;
 
-  document.getElementById('learning-window').style.display = 'block';
+  document.getElementById("learning-window").style.display = "block";
   showCurrentWord();
 });
 
@@ -40,58 +40,40 @@ document.getElementById('start-btn').addEventListener('click', () => {
 function showCurrentWord() {
   if (currentWordIndex >= currentUnitWords.length) {
     alert("本单元学习完毕！");
-    document.getElementById('learning-window').style.display = 'none';
+    document.getElementById("learning-window").style.display = "none";
     return;
   }
   const wordObj = currentUnitWords[currentWordIndex];
-  document.getElementById('word-meaning').textContent = wordObj.japanese;
-  document.getElementById('user-input').value = "";
+  document.getElementById("word-meaning").textContent = wordObj.japanese;
+  document.getElementById("user-input").value = "";
   generateLetterButtons(wordObj.english);
   playWord(wordObj.english);
 }
 
-// 播放读音
-function playWord(word) {
-  const utter = new SpeechSynthesisUtterance(word);
-  utter.lang = 'en-US';
-  speechSynthesis.speak(utter);
-}
-
 // 生成字母按钮
 function generateLetterButtons(word) {
-  let letters = word.split('');
-
-  // 加一些干扰字母
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  while (letters.length < word.length + 3) {
-    const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
-    if (!letters.includes(randLetter)) letters.push(randLetter);
-  }
-
-  // 打乱顺序
-  letters.sort(() => Math.random() - 0.5);
-
-  const div = document.getElementById('letter-buttons');
-  div.innerHTML = "";
-  letters.forEach(l => {
-    const btn = document.createElement('button');
-    btn.textContent = l;
-    btn.addEventListener('click', () => {
-      document.getElementById('user-input').value += l;
+  const container = document.getElementById("letter-buttons");
+  container.innerHTML = "";
+  const letters = word.split("").sort(() => Math.random() - 0.5);
+  letters.forEach(letter => {
+    const btn = document.createElement("button");
+    btn.textContent = letter;
+    btn.addEventListener("click", () => {
+      document.getElementById("user-input").value += letter;
     });
-    div.appendChild(btn);
+    container.appendChild(btn);
   });
 }
 
-// 点击“确定”检查
-document.getElementById('check-btn').addEventListener('click', () => {
-  const input = document.getElementById('user-input').value.toLowerCase();
-  const wordObj = currentUnitWords[currentWordIndex];
-  if (input === wordObj.english) {
-    alert("正确！");
-    currentWordIndex++;
-    showCurrentWord();
-  } else {
-    alert("错误！");
-  }
+// 下一个单词
+document.getElementById("next-btn").addEventListener("click", () => {
+  currentWordIndex++;
+  showCurrentWord();
 });
+
+// 朗读
+function playWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-US";
+  speechSynthesis.speak(utterance);
+}
