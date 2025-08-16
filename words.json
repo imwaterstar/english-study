@@ -3,9 +3,16 @@
     {
       "name": "Unit 1",
       "words": [
-        {"english": "apple", "japanese": "りんご"},
-        {"english": "banana", "japanese": "バナナ"},
-        {"english": "grape", "japanese": "ぶどう"}
+       {"english":"love","japanese":"愛"},
+{"english":"everyone","japanese":"皆さん"},
+{"english":"me","japanese":"私"},
+{"english":"from","japanese":"から"},
+{"english":"japanese","japanese":"日本語"},
+{"english":"sweet","japanese":"スイーツ"},
+{"english":"and","japanese":"と"},
+{"english":"too","japanese":"あまりに"},
+{"english":"join","japanese":"参加"},
+{"english":"club","japanese":"クラブ"}
       ]
     },
     {
