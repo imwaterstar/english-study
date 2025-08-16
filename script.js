@@ -119,6 +119,19 @@ function setupButtonContainer() {
     deleteBtn.id = "delete-btn";
     container.appendChild(deleteBtn);
 
+     // 发音按钮
+    const speakBtn = document.createElement("button");
+    speakBtn.textContent = "发音";
+    speakBtn.id = "speak-btn";
+    container.appendChild(speakBtn);
+
+    // 发音按钮功能
+    speakBtn.addEventListener("click", () => {
+      const wordObj = currentUnitWords[currentWordIndex];
+      if (wordObj) playWord(wordObj.english);
+    });
+
+    // 删除按钮功能
     deleteBtn.addEventListener("click", () => {
       const input = document.getElementById("user-input");
       input.value = input.value.slice(0, -1);
