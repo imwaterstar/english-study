@@ -56,7 +56,7 @@ function showCurrentWord() {
   const wordObj = currentUnitWords[currentWordIndex];
   document.getElementById("word-meaning").textContent = wordObj.japanese;
   document.getElementById("user-input").value = "";
-  document.getElementById("correct-word").textContent = "";
+  // 不清空 correct-word，上一单词正确拼写会保留
   generateLetterButtons(wordObj.english);
   playWord(wordObj.english);
 }
@@ -117,32 +117,28 @@ function setupButtonContainer() {
     });
 
     checkBtn.addEventListener("click", () => {
-  const input = document.getElementById("user-input").value.toLowerCase();
-  const wordObj = currentUnitWords[currentWordIndex];
+      const input = document.getElementById("user-input").value.toLowerCase();
+      const wordObj = currentUnitWords[currentWordIndex];
 
-  // 播放语音
-  playWord(wordObj.english);
+      // 播放语音
+      playWord(wordObj.english);
 
-  totalCount++;
+      totalCount++;
 
-  // 获取正确单词显示区域
-  const correctDisplay = document.getElementById("correct-word");
+      const correctDisplay = document.getElementById("correct-word");
+      correctDisplay.textContent = `正确写法: ${wordObj.english}`; // 总是显示当前单词正确写法
 
-  // 显示正确单词
-  correctDisplay.textContent = `正确写法: ${wordObj.english}`;
+      if (input === wordObj.english) {
+        currentWordIndex++;
+      } else {
+        wrongCount++;
+        if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+        currentWordIndex++;
+      }
 
-  if (input === wordObj.english) {
-    currentWordIndex++;
-  } else {
-    wrongCount++;
-    if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
-    currentWordIndex++;
-  }
-
-  updateCounter();
-  showCurrentWord();
-});
-
+      updateCounter();
+      showCurrentWord();
+    });
   }
 }
 
