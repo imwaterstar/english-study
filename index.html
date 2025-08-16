@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>英语学习</title>
-<style>
-  #letter-buttons button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 18px;
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>英语学习</h1>
-  <select id="unit-select"></select>
-  <button id="start-btn">开始学习</button>
 
-  <div id="learning-window" style="display:none;">
-    <p id="word-meaning"></p>
-    <input type="text" id="user-input" readonly>
-    <div id="letter-buttons"></div>
-    <button id="check-btn">确定</button>
-  </div>
+<h1>英语学习</h1>
 
-  <script src="script.js"></script>
+<!-- 单元选择 -->
+<select id="unit-select">
+  <option value="">选择单元</option>
+</select>
+<button id="start-btn">开始学习</button>
+
+<hr>
+
+<!-- 学习窗口 -->
+<div id="learning-window" style="display:none;">
+  <div id="word-meaning" style="font-size:24px;margin-bottom:10px;"></div>
+  <div id="letter-buttons" style="margin-bottom:10px;"></div>
+  <input type="text" id="user-input" readonly style="font-size:20px;">
+  <button id="check-btn">确定</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

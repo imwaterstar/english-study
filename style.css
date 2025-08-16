@@ -2,7 +2,8 @@ button {
   margin: 2px;
   padding: 10px;
   font-size: 18px;
-
-
 }
-
+input {
+  padding: 5px;
+  width: 300px;
+}
