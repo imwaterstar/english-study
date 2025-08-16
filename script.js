@@ -1,6 +1,9 @@
 let data;
 let currentUnitWords = [];
 let currentWordIndex = 0;
+let wrongWords = [];
+let totalCount = 0;
+let wrongCount = 0;
 
 // 加载 JSON
 fetch("words.json")
@@ -11,7 +14,7 @@ fetch("words.json")
   })
   .catch(err => console.error("加载 JSON 出错:", err));
 
-// 左侧导航栏
+// 左侧导航栏填充单元
 function populateUnitList() {
   const ul = document.getElementById("unit-list");
   ul.innerHTML = "";
@@ -23,22 +26,33 @@ function populateUnitList() {
   });
 }
 
-// 点击单元
+// 加载单元
 function loadUnit(unitIndex) {
   currentUnitWords = data.units[unitIndex].words;
   currentWordIndex = 0;
+  wrongWords = [];
+  totalCount = 0;
+  wrongCount = 0;
+  updateCounter();
   document.getElementById("learning-window").style.display = "block";
-  setupButtonContainer();
   showCurrentWord();
+  setupButtonContainer();
 }
 
-// 显示当前单词
+// 显示单词
 function showCurrentWord() {
   if (currentWordIndex >= currentUnitWords.length) {
-    alert("本单元学习完毕！");
-    document.getElementById("learning-window").style.display = "none";
-    return;
+    if (wrongWords.length > 0) {
+      currentUnitWords = [...wrongWords];
+      wrongWords = [];
+      currentWordIndex = 0;
+    } else {
+      alert(`本单元练习完成！总练习: ${totalCount}, 拼写错误: ${wrongCount}`);
+      document.getElementById("learning-window").style.display = "none";
+      return;
+    }
   }
+
   const wordObj = currentUnitWords[currentWordIndex];
   document.getElementById("word-meaning").textContent = wordObj.japanese;
   document.getElementById("user-input").value = "";
@@ -46,7 +60,7 @@ function showCurrentWord() {
   playWord(wordObj.english);
 }
 
-// 播放发音
+// 播放语音
 function playWord(word) {
   const utter = new SpeechSynthesisUtterance(word);
   utter.lang = "en-US";
@@ -60,14 +74,12 @@ function generateLetterButtons(word) {
 
   let letters = word.split("");
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
   while (letters.length < Math.ceil(word.length * 1.5)) {
     const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
     if (!letters.includes(randLetter)) letters.push(randLetter);
   }
 
   letters.sort(() => Math.random() - 0.5);
-
   letters.forEach(l => {
     const btn = document.createElement("button");
     btn.textContent = l;
@@ -81,14 +93,15 @@ function generateLetterButtons(word) {
 // 设置按钮容器（确认 + 删除）
 function setupButtonContainer() {
   let container = document.getElementById("button-container");
-
   if (!container) {
     container = document.createElement("div");
     container.id = "button-container";
     document.getElementById("learning-window").appendChild(container);
 
     // 确认按钮
-    const checkBtn = document.getElementById("check-btn");
+    const checkBtn = document.createElement("button");
+    checkBtn.textContent = "确认";
+    checkBtn.id = "check-btn";
     container.appendChild(checkBtn);
 
     // 删除按钮
@@ -101,26 +114,34 @@ function setupButtonContainer() {
       const input = document.getElementById("user-input");
       input.value = input.value.slice(0, -1);
     });
+
+    checkBtn.addEventListener("click", () => {
+      const input = document.getElementById("user-input").value.toLowerCase();
+      const wordObj = currentUnitWords[currentWordIndex];
+
+      // 播放语音
+      playWord(wordObj.english);
+
+      totalCount++;
+
+      if (input === wordObj.english) {
+        currentWordIndex++;
+      } else {
+        wrongCount++;
+        if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+        currentWordIndex++;
+      }
+
+      updateCounter();
+      showCurrentWord();
+    });
   }
 }
 
-// 确认按钮逻辑
-document.getElementById("check-btn").addEventListener("click", () => {
-  const input = document.getElementById("user-input").value.toLowerCase();
-  const wordObj = currentUnitWords[currentWordIndex];
-   // 无论对错，先播放发音
-  playWord(wordObj.english);
-  if (input === wordObj.english) {
-    alert("正确！");
-    currentWordIndex++;
-    showCurrentWord();
-  } else {
-    // 注意这里用反引号
-    alert(`错误！正确写法是：${wordObj.english}`);
-  }
-});
-
-
-
-
-
+// 计数器显示
+const counterDisplay = document.createElement("p");
+counterDisplay.id = "counter-display";
+document.getElementById("learning-window").prepend(counterDisplay);
+function updateCounter() {
+  counterDisplay.textContent = `总练习: ${totalCount} | 拼写错误: ${wrongCount}`;
+}
