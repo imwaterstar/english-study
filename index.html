@@ -8,18 +8,21 @@
 <body>
   <h1>英语学习</h1>
 
-  <!-- 单元选择 -->
-  <div id="unit-container">
-    <select id="unit-select"></select>
-    <button id="start-btn">开始学习</button>
-  </div>
+  <div id="container">
+    <!-- 左侧导航栏 -->
+    <div id="sidebar">
+      <ul id="unit-list"></ul>
+    </div>
 
-  <!-- 学习窗口 -->
-  <div id="learning-window" style="display: none;">
-    <p id="word-meaning"></p>
-    <input type="text" id="user-input" readonly>
-    <div id="letter-buttons"></div>
-    <button id="next-btn">下一个</button>
+    <!-- 右侧学习区 -->
+    <div id="main">
+      <div id="learning-window" style="display: none;">
+        <p id="word-meaning"></p>
+        <input type="text" id="user-input" readonly>
+        <div id="letter-buttons"></div>
+        <button id="check-btn">确认</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
