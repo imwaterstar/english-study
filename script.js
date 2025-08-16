@@ -128,12 +128,16 @@ function setupButtonContainer() {
       const correctDisplay = document.getElementById("correct-word");
 
       if (input === wordObj.english) {
-        correctDisplay.textContent = "";
+        correctDisplay.textContent = ""; // 正确则清空提示
         currentWordIndex++;
       } else {
         wrongCount++;
         if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+
+        // 显示错误时正确写法
         correctDisplay.textContent = `正确写法: ${wordObj.english}`;
+        correctDisplay.style.color = "red";
+        correctDisplay.style.fontWeight = "bold";
         currentWordIndex++;
       }
 
