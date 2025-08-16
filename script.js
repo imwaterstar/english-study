@@ -1,127 +1,138 @@
-let currentWordIndex = 0;
-let wrongWords = [];
+let currentUnitWords = [];  // 当前单元单词
+let currentIndex = 0;       // 当前单词索引
+let wrongWords = [];        // 错词列表
 let totalCount = 0;
 let wrongCount = 0;
 
-// 假设你有一个词汇数组（示例）
-const currentUnitWords = [
-  { english: "apple", japanese: "りんご" },
-  { english: "banana", japanese: "バナナ" },
-  { english: "grape", japanese: "ぶどう" }
-];
+// =======================
+// 加载 JSON 文件
+// =======================
+fetch("words.json")
+  .then(res => res.json())
+  .then(json => {
+    if (!json.units || json.units.length === 0) throw new Error("words.json结构错误");
+    // 默认加载第一个单元
+    currentUnitWords = json.units[0].words || [];
+    document.getElementById("learning-window").style.display = "block";
+    showCurrentWord();
+    updateCounter();
+  })
+  .catch(err => {
+    console.error("加载 JSON 出错:", err);
+    // 兜底示例
+    currentUnitWords = [
+      { english: "apple", japanese: "りんご" },
+      { english: "banana", japanese: "バナナ" },
+      { english: "grape", japanese: "ぶどう" }
+    ];
+    document.getElementById("learning-window").style.display = "block";
+    showCurrentWord();
+    updateCounter();
+  });
 
 // =======================
-//  工具函数
+// 显示当前单词
 // =======================
+function showCurrentWord() {
+  if (currentIndex >= currentUnitWords.length) {
+    // 如果有错词，重新练习
+    if (wrongWords.length > 0) {
+      currentUnitWords = [...wrongWords];
+      wrongWords = [];
+      currentIndex = 0;
+    } else {
+      alert(`本单元练习完成！总练习: ${totalCount} | 拼写错误: ${wrongCount}`);
+      document.getElementById("learning-window").style.display = "none";
+      return;
+    }
+  }
 
-// 播放单词语音（简化示例）
-function playWord(word) {
+  const wordObj = currentUnitWords[currentIndex];
+  if (!wordObj) return;
+
+  document.getElementById("word-meaning").textContent = wordObj.japanese;
+  document.getElementById("user-input").value = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("correct-word").textContent = "";
+
+  generateLetterButtons(wordObj.english);
+  speakWord(wordObj.english);
+}
+
+// =======================
+// 播放语音
+// =======================
+function speakWord(word) {
   const utter = new SpeechSynthesisUtterance(word);
   utter.lang = "en-US";
   speechSynthesis.speak(utter);
 }
 
-// 获取或创建确认按钮
-function getOrCreateCheckBtn() {
-  let btn = document.getElementById("check-btn");
-  if (!btn) {
-    btn = document.createElement("button");
-    btn.id = "check-btn";
-    btn.textContent = "确认";
-    document.getElementById("learning-window").appendChild(btn);
-  }
-  return btn;
-}
-
-// 获取或创建正确拼写提示
-function getOrCreateCorrectWordEl() {
-  let p = document.getElementById("correct-word");
-  if (!p) {
-    p = document.createElement("p");
-    p.id = "correct-word";
-    document.getElementById("learning-window").appendChild(p);
-  }
-  return p;
-}
-
 // =======================
-//  UI 显示相关
+// 生成字母按钮
 // =======================
+function generateLetterButtons(word) {
+  const div = document.getElementById("letter-buttons");
+  div.innerHTML = "";
 
-// 显示当前单词的日文提示
-function showCurrentWord() {
-  if (currentWordIndex >= currentUnitWords.length) {
-    // 如果有错词，进入复习
-    if (wrongWords.length > 0) {
-      currentUnitWords.push(...wrongWords);
-      wrongWords = [];
-      currentWordIndex = 0;
-    } else {
-      alert("本单元完成！");
-      return;
-    }
+  const allLettersSet = new Set();
+  currentUnitWords.forEach(w => w.english.split('').forEach(l => allLettersSet.add(l)));
+  let letters = Array.from(allLettersSet);
+  word.split('').forEach(l => { if (!letters.includes(l)) letters.push(l); });
+
+  const targetCount = Math.ceil(word.length * 1.5);
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  while (letters.length < targetCount) {
+    const randLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    if (!letters.includes(randLetter)) letters.push(randLetter);
   }
 
-  const wordObj = currentUnitWords[currentWordIndex];
-  document.getElementById("japanese-word").textContent = wordObj.japanese;
-  document.getElementById("user-input").value = "";
-  playWord(wordObj.english);
-}
-
-// 更新计数器
-function updateCounter() {
-  const counterDisplay = document.getElementById("counter-display");
-  counterDisplay.textContent = `总练习: ${totalCount} | 拼写错误: ${wrongCount}`;
-}
-
-// =======================
-//  初始化
-// =======================
-document.addEventListener("DOMContentLoaded", () => {
-  // 确保学习窗口存在
-  const learningWindow = document.getElementById("learning-window");
-
-  // 计数器
-  let counterDisplay = document.getElementById("counter-display");
-  if (!counterDisplay) {
-    counterDisplay = document.createElement("p");
-    counterDisplay.id = "counter-display";
-    learningWindow.prepend(counterDisplay);
-  }
-
-  // 获取按钮并绑定事件
-  const Btn = getOrCreateCheckBtn();
-
-  Btn.addEventListener("click", () => {
-    const input = document.getElementById("user-input").value.trim().toLowerCase();
-    const wordObj = currentUnitWords[currentWordIndex];
-    if (!wordObj) return;
-
-    // 播放语音
-    playWord(wordObj.english);
-
-    totalCount++;
-    const correctDisplay = getOrCreateCorrectWordEl();
-
-    if (input === wordObj.english.toLowerCase()) {
-      // 正确
-      correctDisplay.textContent = "";
-      currentWordIndex++;
-    } else {
-      // 错误
-      wrongCount++;
-      if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
-      correctDisplay.textContent = `正确写法: ${wordObj.english}`;
-      correctDisplay.style.color = "red";
-      correctDisplay.style.fontWeight = "bold";
-      currentWordIndex++;
-    }
-
-    updateCounter();
-    showCurrentWord();
+  letters.sort(() => Math.random() - 0.5);
+  letters.forEach(l => {
+    const btn = document.createElement("button");
+    btn.textContent = l;
+    btn.addEventListener("click", () => {
+      document.getElementById("user-input").value += l;
+    });
+    div.appendChild(btn);
   });
+}
 
-  // 开始第一题
-  showCurrentWord();
+// =======================
+// 确认答案
+// =======================
+document.getElementById("check-btn").addEventListener("click", checkAnswer);
+
+function checkAnswer() {
+  const userInput = document.getElementById("user-input").value.trim().toLowerCase();
+  const wordObj = currentUnitWords[currentIndex];
+  if (!wordObj) return;
+
+  // 点击确认后再播放一次语音
+  speakWord(wordObj.english);
+
+  totalCount++;
+  const resultDiv = document.getElementById("result");
+  const correctWordEl = document.getElementById("correct-word");
+
+  if (userInput === wordObj.english.toLowerCase()) {
+    resultDiv.textContent = "正确！";
+    resultDiv.style.color = "green";
+    correctWordEl.textContent = "";
+  } else {
+    resultDiv.textContent = `错误！正确写法是：${wordObj.english}`;
+    resultDiv.style.color = "red";
+    correctWordEl.textContent = `正确拼写：${wordObj.english}`;
+    correctWordEl.style.color = "red";
+    correctWordEl.style.fontWeight = "bold";
+
+    if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+    wrongCount++;
+  }
+
   updateCounter();
-});
+  currentIndex++;
+  showCurrentWord();
+}
+
+// =====================
