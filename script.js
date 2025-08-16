@@ -113,8 +113,9 @@ document.getElementById("check-btn").addEventListener("click", () => {
     currentWordIndex++;
     showCurrentWord();
   } else {
-    alert("错误！正确写法是："${wordObj.english});
+    alert(`错误！正确写法是：${wordObj.english}`);
   }
 });
+
 
 
