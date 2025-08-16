@@ -1,22 +1,52 @@
 body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
   text-align: center;
-  margin-top: 50px;
+  margin: 20px 0;
 }
 
-#unit-container {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+/* 容器: 左侧导航栏 + 右侧内容 */
+#container {
+  display: flex;
+  height: calc(100vh - 80px);
 }
 
-#learning-window {
-  margin-top: 100px;
+/* 左侧导航栏 */
+#sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+#sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+#sidebar li:hover {
+  background-color: #ddd;
+}
+
+/* 右侧主区域 */
+#main {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 学习区 */
 #letter-buttons button {
   margin: 5px;
   padding: 10px;
 }
-
