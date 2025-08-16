@@ -126,6 +126,7 @@ function setupButtonContainer() {
       totalCount++;
 
       const correctDisplay = document.getElementById("correct-word");
+      container.appendChild(correctDisplay);
       correctDisplay.textContent = `正确写法: ${wordObj.english}`; // 总是显示当前单词正确写法
 
       if (input === wordObj.english) {
