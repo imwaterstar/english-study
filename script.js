@@ -56,6 +56,7 @@ function showCurrentWord() {
   const wordObj = currentUnitWords[currentWordIndex];
   document.getElementById("word-meaning").textContent = wordObj.japanese;
   document.getElementById("user-input").value = "";
+  document.getElementById("correct-word").textContent = "";
   generateLetterButtons(wordObj.english);
   playWord(wordObj.english);
 }
@@ -124,11 +125,15 @@ function setupButtonContainer() {
 
       totalCount++;
 
+      const correctDisplay = document.getElementById("correct-word");
+
       if (input === wordObj.english) {
+        correctDisplay.textContent = "";
         currentWordIndex++;
       } else {
         wrongCount++;
         if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+        correctDisplay.textContent = `正确写法: ${wordObj.english}`;
         currentWordIndex++;
       }
 
