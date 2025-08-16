@@ -41,7 +41,7 @@ function loadUnit(unitIndex) {
   document.getElementById("letter-buttons").innerHTML = "";
   document.getElementById("correct-word").textContent = "";
   
-  document.getElementById("learning-window").style.display = "block";
+  //document.getElementById("learning-window").style.display = "block";
   showCurrentWord();
   setupButtonContainer();
   
