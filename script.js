@@ -117,33 +117,32 @@ function setupButtonContainer() {
     });
 
     checkBtn.addEventListener("click", () => {
-      const input = document.getElementById("user-input").value.toLowerCase();
-      const wordObj = currentUnitWords[currentWordIndex];
+  const input = document.getElementById("user-input").value.toLowerCase();
+  const wordObj = currentUnitWords[currentWordIndex];
 
-      // 播放语音
-      playWord(wordObj.english);
+  // 播放语音
+  playWord(wordObj.english);
 
-      totalCount++;
+  totalCount++;
 
-      const correctDisplay = document.getElementById("correct-word");
+  // 获取正确单词显示区域
+  const correctDisplay = document.getElementById("correct-word");
 
-      if (input === wordObj.english) {
-        correctDisplay.textContent = ""; // 正确则清空提示
-        currentWordIndex++;
-      } else {
-        wrongCount++;
-        if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+  // 显示正确单词
+  correctDisplay.textContent = `正确写法: ${wordObj.english}`;
 
-        // 显示错误时正确写法
-        correctDisplay.textContent = `正确写法: ${wordObj.english}`;
-        correctDisplay.style.color = "red";
-        correctDisplay.style.fontWeight = "bold";
-        currentWordIndex++;
-      }
+  if (input === wordObj.english) {
+    currentWordIndex++;
+  } else {
+    wrongCount++;
+    if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+    currentWordIndex++;
+  }
 
-      updateCounter();
-      showCurrentWord();
-    });
+  updateCounter();
+  showCurrentWord();
+});
+
   }
 }
 
