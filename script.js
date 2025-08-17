@@ -65,7 +65,7 @@ document.addEventListener("keydown", (event) => {
 
   // 按 Enter 等于点“确定”按钮
   if (event.key === "Enter") {
-    document.getElementById("check-button")?.click();
+    document.getElementById("check-btn")?.click();
   }
 });
 
