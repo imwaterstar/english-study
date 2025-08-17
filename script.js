@@ -78,7 +78,7 @@ function showCurrentWord() {
       wrongWords = [];
       currentWordIndex = 0;
     } else {
-      alert(`お疲れ様！練習: ${totalCount}, 間違える: ${wrongCount}`);
+      alert(`お疲れ様！練習: ${totalCount}, 不正解: ${wrongCount}`);
       document.getElementById("learning-window").style.display = "none";
       return;
     }
@@ -192,5 +192,5 @@ const counterDisplay = document.createElement("p");
 counterDisplay.id = "counter-display";
 document.getElementById("learning-window").prepend(counterDisplay);
 function updateCounter() {
-  counterDisplay.textContent = `練習: ${totalCount} | 誤る: ${wrongCount}`;
+  counterDisplay.textContent = `練習: ${totalCount} | 不正解: ${wrongCount}`;
 }
