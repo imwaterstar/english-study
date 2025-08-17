@@ -92,42 +92,6 @@ function showCurrentWord() {
   playWord(wordObj.english);
 }
 
-function checkAnswer() {
-  const inputBox = document.getElementById("answer-input");
-  const userInput = inputBox.value.trim().toLowerCase();
-  const wordObj = currentUnit[currentIndex];
-  const correctAnswer = wordObj.english.toLowerCase();
-
-  if (userInput === correctAnswer) {
-    // ✅ 答案正确
-    showMessage("正确！", "success");
-
-    // 显示正确写法
-    const correctDisplay = document.getElementById("correct-word");
-    correctDisplay.textContent = `正确写法: ${wordObj.english}`;
-
-    currentIndex++;
-    if (currentIndex < currentUnit.length) {
-      showCurrentWord();
-    } else {
-      showMessage("本单元完成！", "info");
-    }
-  } else {
-    // ❌ 答案错误，只播声音 + 显示正确答案
-    const errorSound = document.getElementById("error-sound");
-    if (errorSound) {
-      errorSound.currentTime = 0;
-      errorSound.play().catch(() => {});
-    }
-
-    const correctDisplay = document.getElementById("correct-word");
-    correctDisplay.textContent = `正确写法: ${wordObj.english}`;
-  }
-
-  // 清空输入框
-  inputBox.value = "";
-  inputBox.focus();
-}
 
 // 播放语音
 function playWord(word) {
@@ -216,6 +180,8 @@ function setupButtonContainer() {
         wrongCount++;
         if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
         currentWordIndex++;
+        const errorSound = new Audio("error.mp3");
+        errorSound.play().catch(() => {});
       }
 
       updateCounter();
