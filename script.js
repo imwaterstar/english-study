@@ -170,19 +170,23 @@ function setupButtonContainer() {
 
       totalCount++;
 
-      const correctDisplay = document.getElementById("correct-word");
-      container.appendChild(correctDisplay);
-      correctDisplay.textContent = `word: ${wordObj.english}`; // 总是显示当前单词正确写法
+     const correctDisplay = document.getElementById("correct-word");
 
-      if (input === wordObj.english) {
-        currentWordIndex++;
-      } else {
-        wrongCount++;
-        if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
-        currentWordIndex++;
-        const errorSound = new Audio("error.mp3");
-        errorSound.play().catch(() => {});
-      }
+if (input === wordObj.english) {
+  correctDisplay.textContent = ""; // 正确时清空显示
+  currentWordIndex++;
+} else {
+  wrongCount++;
+  if (!wrongWords.includes(wordObj)) wrongWords.push(wordObj);
+  currentWordIndex++;
+  
+  // 显示正确单词
+  correctDisplay.textContent = `正确写法: ${wordObj.english}`;
+
+  // 播放错误提示音
+  const errorSound = new Audio("error.mp3");
+  errorSound.play().catch(() => {});
+}
 
       updateCounter();
       showCurrentWord();
