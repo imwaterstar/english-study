@@ -47,6 +47,29 @@ function loadUnit(unitIndex) {
   
 }
 
+// 键盘输入功能
+document.addEventListener("keydown", (event) => {
+  const input = document.getElementById("user-input");
+  if (!input) return;
+
+  // 只允许输入英文字母
+  if (/^[a-zA-Z]$/.test(event.key)) {
+    input.value += event.key.toLowerCase(); // 转小写保持一致
+  }
+
+  // 按 Backspace 删除最后一个字母
+  if (event.key === "Backspace") {
+    input.value = input.value.slice(0, -1);
+    event.preventDefault(); // 防止浏览器退后
+  }
+
+  // 按 Enter 等于点“确定”按钮
+  if (event.key === "Enter") {
+    document.getElementById("check-button")?.click();
+  }
+});
+
+
 // 显示当前单词
 function showCurrentWord() {
   if (currentWordIndex >= currentUnitWords.length) {
