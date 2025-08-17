@@ -78,7 +78,7 @@ function showCurrentWord() {
       wrongWords = [];
       currentWordIndex = 0;
     } else {
-      alert(`本单元练习完成！总练习: ${totalCount}, 拼写错误: ${wrongCount}`);
+      alert(`お疲れ様！練習: ${totalCount}, 間違える: ${wrongCount}`);
       document.getElementById("learning-window").style.display = "none";
       return;
     }
@@ -132,19 +132,19 @@ function setupButtonContainer() {
 
     // 确认按钮
     const checkBtn = document.createElement("button");
-    checkBtn.textContent = "确认";
+    checkBtn.textContent = "確定";
     checkBtn.id = "check-btn";
     container.appendChild(checkBtn);
 
     // 删除按钮
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "删除";
+    deleteBtn.textContent = "削除";
     deleteBtn.id = "delete-btn";
     container.appendChild(deleteBtn);
 
      // 发音按钮
     const speakBtn = document.createElement("button");
-    speakBtn.textContent = "发音";
+    speakBtn.textContent = "発音";
     speakBtn.id = "speak-btn";
     container.appendChild(speakBtn);
 
@@ -171,7 +171,7 @@ function setupButtonContainer() {
 
       const correctDisplay = document.getElementById("correct-word");
       container.appendChild(correctDisplay);
-      correctDisplay.textContent = `正确写法: ${wordObj.english}`; // 总是显示当前单词正确写法
+      correctDisplay.textContent = `word: ${wordObj.english}`; // 总是显示当前单词正确写法
 
       if (input === wordObj.english) {
         currentWordIndex++;
@@ -192,5 +192,5 @@ const counterDisplay = document.createElement("p");
 counterDisplay.id = "counter-display";
 document.getElementById("learning-window").prepend(counterDisplay);
 function updateCounter() {
-  counterDisplay.textContent = `总练习: ${totalCount} | 拼写错误: ${wrongCount}`;
+  counterDisplay.textContent = `練習: ${totalCount} | 誤る: ${wrongCount}`;
 }
