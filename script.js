@@ -199,5 +199,5 @@ const counterDisplay = document.createElement("p");
 counterDisplay.id = "counter-display";
 document.getElementById("learning-window").prepend(counterDisplay);
 function updateCounter() {
-  counterDisplay.textContent = `練習: ${totalCount} | 不正解: ${wrongCount}`;
+  counterDisplay.textContent = `練習回数: ${totalCount} | 不正解: ${wrongCount}`;
 }
