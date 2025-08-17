@@ -27,8 +27,9 @@
 {"english":"great","japanese":"良い"},
 {"english":"class","japanese":"クラス"}
       ]
-
-"name": "Unit 3",
+    },
+    {
+      "name": "Unit 3",
       "words": [
        {"english":"our","japanese":"私達の"},
 {"english":"canada","japanese":"カナダ"},
@@ -40,7 +41,8 @@
 {"english":"chinese","japanese":"中国語"}
 
       ]
-
+    },
+    {
 "name": "Unit 4",
       "words": [
     {"english":"can","japanese":"できる"},
@@ -57,9 +59,10 @@
 {"english":"really","japanese":"本当に"},
 {"english":"see","japanese":"見る"},
 {"english":"excuse","japanese":"言い訳"}
-
-       
-      ]
+    
+     ]
+      },
+    {
 
 "name": "Unit 5",
       "words": [
@@ -71,6 +74,8 @@
 {"english":"symbol","japanese":"符号"}
 
       ]
+      },
+    {
 
 "name": "Unit 6",
       "words": [
@@ -88,6 +93,8 @@
 {"english":"around","japanese":"附近"}
 
       ]
+      },
+    {
 
 "name": "Unit 7",
       "words": [
@@ -102,6 +109,8 @@
 {"english":"hallway","japanese":"廊下"}
 
       ]
+      },
+    {
 
 "name": "Unit 8",
       "words": [
@@ -119,11 +128,10 @@
 {"english":"","japanese":""}
 
       ]
-
-
-
+      
     }
   ]
 }
+
 
 
