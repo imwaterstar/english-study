@@ -141,22 +141,6 @@
 
                 
          ]
-},
-   
- {
-
-"name": "Unit 10",
-      "words": [
-         {"english":"noon","japanese":"正午"},
-{"english":"last","japanese":"最後"},
-{"english":"like","japanese":"好き"},
-{"english":"clock","japanese":"時計"},
-{"english":"netball","japanese":"ネットボール"},
-{"english":"time","japanese":"時間"},
-{"english":"afternoon","japanese":"午後"},
-{"english":"basketball","japanese":"バスケットボール"}
-       
-         ]
 }
    
  
@@ -169,6 +153,7 @@
  
   ]
 }
+
 
 
 
