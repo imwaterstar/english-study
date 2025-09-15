@@ -127,8 +127,7 @@
 
  ]
 },
-    {
-
+{
 "name": "Unit "9,
       "words": [
 {"english":"puppy","japanese":"仔犬"},
@@ -158,22 +157,9 @@
 {"english":"basketball","japanese":"バスケットボール"}
        
          ]
-},
-   
- {
-"name": "Unit 11",
-      "words": [
-         {"english":"front","japanese":"前"},
-{"english":"nervous","japanese":"緊張"},
-{"english":"worry","japanese":"心配"},
-{"english":"yourself","japanese":"あなた自身"},
-{"english":"sheep","japanese":"羊"},
-{"english":"right","japanese":"右、正確"},
-{"english":"turn","japanese":"転換"},
-{"english":"please","japanese":"お願い"},
-{"english":"look","japanese":"見る"}       
-         ]
 }
+   
+ 
 
 
 
@@ -183,6 +169,7 @@
  
   ]
 }
+
 
 
 
