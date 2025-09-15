@@ -73,7 +73,61 @@
 {"english":"symbol","japanese":"符号"}
 
       ]
+},
+{
+"name": "Unit 6",
+      "words": [
+       {"english":"for","japanese":"ために"},
+{"english":"interesting","japanese":"面白い"},
+{"english":"favorite","japanese":"大好き"},
+{"english":"character","japanese":"キャラクター"},
+{"english":"also","japanese":"も"},
+{"english":"what","japanese":"何"},
+{"english":"family","japanese":"家族"},
+{"english":"who","japanese":"誰"},
+{"english":"why","japanese":"何で"},
+{"english":"brave","japanese":"勇ましい"},
+{"english":"kind","japanese":"親切"},
+{"english":"around","japanese":"附近"}
+
+      ]
+},
+   
+ {
+"name": "Unit 7",
+      "words": [
+       {"english":"after","japanese":"。。の後"},
+{"english":"online","japanese":"オンライン"},
+{"english":"live","japanese":"暮らし"},
+{"english":"come","japanese":"来る"},
+{"english":"by","japanese":"。。による"},
+{"english":"walk","japanese":"歩く"},
+{"english":"when","japanese":"いつ"},
+{"english":"study","japanese":"学習"},
+{"english":"hallway","japanese":"廊下"}
+
+      ]
+},
+   
+ {
+"name": "Unit 8",
+      "words": [
+       {"english":"win","japanese":"勝つ"},
+{"english":"next","japanese":"次の"},
+{"english":"luck","japanese":"ラック"},
+{"english":"near","japanese":"近い"},
+{"english":"where","japanese":"どこ"},
+{"english":"practice","japanese":"練習"},
+{"english":"hard","japanese":"ハッド"},
+{"english":"go","japanese":"行く"},
+{"english":"park","japanese":"パーク"},
+{"english":"station","japanese":"駅"},
+{"english":"under","japanese":"下"},
+{"english":"","japanese":""}
+
+ ]
 }
+
 
    
  
@@ -81,6 +135,7 @@
  
   ]
 }
+
 
 
 
