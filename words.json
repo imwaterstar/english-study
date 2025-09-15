@@ -41,13 +41,47 @@
 {"english":"chinese","japanese":"中国語"}
 
       ]
- }
+ },
+    {
+"name": "Unit 4",
+      "words": [
+    {"english":"can","japanese":"できる"},
+{"english":"some","japanese":"いくつか"},
+{"english":"parent","japanese":"親"},
+{"english":"china","japanese":"中国"},
+{"english":"food","japanese":"食べ物"},
+{"english":"father","japanese":"父"},
+{"english":"make","japanese":"作る"},
+{"english":"very","japanese":"とても"},
+{"english":"well","japanese":"良い"},
+{"english":"that","japanese":"あれ"},
+{"english":"read","japanese":"読む"},
+{"english":"really","japanese":"本当に"},
+{"english":"see","japanese":"見る"},
+{"english":"excuse","japanese":"言い訳"}
+ ]
+},
+   
+ {
+"name": "Unit 5",
+      "words": [
+       {"english":"here","japanese":"ここ"},
+{"english":"welcome","japanese":"いらっしゃい"},
+{"english":"your","japanese":"あなたの"},
+{"english":"thank","japanese":"ありがとう"},
+{"english":"bird","japanese":"鳥"},
+{"english":"symbol","japanese":"符号"}
+
+      ]
+}
+
    
  
    
  
   ]
 }
+
 
 
 
