@@ -27,7 +27,8 @@
 {"english":"great","japanese":"良い"},
 {"english":"class","japanese":"クラス"}
       ]
-
+ },
+    {
 "name": "Unit 3",
       "words": [
        {"english":"our","japanese":"私達の"},
@@ -40,7 +41,9 @@
 {"english":"chinese","japanese":"中国語"}
 
       ]
-
+ },
+   
+ {
 "name": "Unit 4",
       "words": [
     {"english":"can","japanese":"できる"},
@@ -57,10 +60,10 @@
 {"english":"really","japanese":"本当に"},
 {"english":"see","japanese":"見る"},
 {"english":"excuse","japanese":"言い訳"}
-
-       
-      ]
-
+ ]
+},
+   
+ {
 "name": "Unit 5",
       "words": [
        {"english":"here","japanese":"ここ"},
@@ -71,7 +74,9 @@
 {"english":"symbol","japanese":"符号"}
 
       ]
-
+},
+   
+ {
 "name": "Unit 6",
       "words": [
        {"english":"for","japanese":"ために"},
@@ -88,7 +93,9 @@
 {"english":"around","japanese":"附近"}
 
       ]
-
+},
+   
+ {
 "name": "Unit 7",
       "words": [
        {"english":"after","japanese":"。。の後"},
@@ -102,7 +109,9 @@
 {"english":"hallway","japanese":"廊下"}
 
       ]
-
+},
+   
+ {
 "name": "Unit 8",
       "words": [
        {"english":"win","japanese":"勝つ"},
@@ -119,13 +128,117 @@
 {"english":"","japanese":""}
 
  ]
+},
+   
+ {
 
+"name": "Unit "9,
+      "words": [
+{"english":"puppy","japanese":"仔犬"},
+{"english":"someday","japanese":"ある日"},
+{"english":"lot","japanese":"沢山"},
+{"english":"they","japanese":"彼ら"},
+{"english":"animal","japanese":"動物"},
+{"english":"visit","japanese":"訪問"},
+{"english":"Japan","japanese":"日本"},
+{"english":"many","japanese":"沢山(数える)"}
 
+                
+         ]
+},
+   
+ {
 
+"name": "Unit 10",
+      "words": [
+         {"english":"noon","japanese":"正午"},
+{"english":"last","japanese":"最後"},
+{"english":"like","japanese":"好き"},
+{"english":"clock","japanese":"時計"},
+{"english":"netball","japanese":"ネットボール"},
+{"english":"time","japanese":"時間"},
+{"english":"afternoon","japanese":"午後"},
+{"english":"basketball","japanese":"バスケットボール"}
+       
+         ]
+},
+   
+ {
+"name": "Unit 11",
+      "words": [
+         {"english":"front","japanese":"前"},
+{"english":"nervous","japanese":"緊張"},
+{"english":"worry","japanese":"心配"},
+{"english":"yourself","japanese":"あなた自身"},
+{"english":"sheep","japanese":"羊"},
+{"english":"right","japanese":"右、正確"},
+{"english":"turn","japanese":"転換"},
+{"english":"please","japanese":"お願い"},
+{"english":"look","japanese":"見る"}       
+         ]
+},
+   
+ {
+"name": "Unit 12",
+      "words": [
+          {"english":"poster","japanese":"ポスター"},
+{"english":"age","japanese":"年齢"},
+{"english":"movie","japanese":"映画"},
+{"english":"student","japanese":"学生"},
+{"english":"much","japanese":"大して"},
+{"english":"start","japanese":"開始"},
+{"english":"famous","japanese":"有名な"},
+{"english":"tell","japanese":"伝える"},
+{"english":"elementary","japanese":"安易な"},
+{"english":"subject","japanese":"科目"},
+{"english":"junior","japanese":"ジュニア"},
+{"english":"high school","japanese":"高校"},
+{"english":"every","japanese":"毎"},
+{"english":"big","japanese":"大きい"},
+{"english":"player","japanese":"選手"}
+      
+         ]
+},
+   
+ {
 
-    }
+"name": "Unit 13",
+      "words": [
+          {"english":"any","japanese":"どれでも"},
+{"english":"there","japanese":"あそこ"},
+{"english":"surf","japanese":"サーフィン"},
+{"english":"life","japanese":"生命"},
+{"english":"beach","japanese":"砂浜"},
+{"english":"question","japanese":"問題"},
+{"english":"weekend","japanese":"週末"},
+{"english":"swim","japanese":"水泳"},
+{"english":"sometime","japanese":"ある時"}
+      
+         ]
+},
+   
+ {
+
+"name": "Unit 14",
+      "words": [
+          {"english":"cafe","japanese":"カフェ"},
+{"english":"website","japanese":"ウェブサイト"},
+{"english":"popular","japanese":"人気"},
+{"english":"owner","japanese":"持ち主"},
+{"english":"know","japanese":"知る"},
+{"english":"patty","japanese":"パティ"},
+{"english":"fried","japanese":"フレンド"},
+{"english":"top","japanese":"トップ"},
+{"english":"wonderful","japanese":"素晴らしい"},
+{"english":"restaurant","japanese":"レストラン"},
+{"english":"friendly","japanese":"フレンドリー"},
+{"english":"dish","japanese":"皿"}
+  
+         ]
+},
+   
+ 
   ]
 }
-
 
 
